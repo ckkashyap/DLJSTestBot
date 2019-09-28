@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading;
@@ -79,6 +80,30 @@ namespace Microsoft.BotBuilderSamples.Bots
             await turnContext.SendActivityAsync(resp, cancellationToken);
         }
 
+        byte[] SlurpStream(Stream stream)
+        {
+            var listOfByteArrs = new List<byte[]>();
+            int totalCount = 0;
+            bool theresMore = false;
+            using (var reader = new BinaryReader(stream))
+            {
+                do
+                {
+                    var ba = reader.ReadBytes(10000);
+                    totalCount += ba.Length;
+                    listOfByteArrs.Add(ba);
+                    theresMore = ba.Length > 0;
+                } while (theresMore);
+            }
+
+            var output = new byte[totalCount];
+            using (var ostream = new MemoryStream(output))
+                foreach (var bytes in listOfByteArrs)
+                    ostream.Write(bytes, 0, bytes.Length);
+
+            return output;
+        }
+
         async Task OnStreamingMessageActivityAsync(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
         {
             dynamic channelData = new JObject();
@@ -95,12 +120,13 @@ namespace Microsoft.BotBuilderSamples.Bots
                 foreach (var a in turnContext.Activity.Attachments)
                 {
                     var stream = a.Content as Stream;
-                    using (var reader = new StreamReader(stream, Encoding.UTF8))
+                    //using (var reader = new BinaryReader(stream))
                     {
-                        var t = reader.ReadToEnd();
+                        // TODO - find the right way to read the whole stream
+                        var t = SlurpStream(stream); //  reader.ReadBytes((int)stream.Length);
                         dynamic atch = new JObject();
                         atch.contentType = a.ContentType;
-                        atch.contentUrl = "ABCD";
+                        atch.contentUrl = Convert.ToBase64String(t);
                         atch.thumbnailUrl = a.ThumbnailUrl;
                         attachments.Add(atch);
                     }
