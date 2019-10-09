@@ -77,6 +77,7 @@ namespace Microsoft.BotBuilderSamples.Bots
 
             channelData.originalActivity.text = activity.Text;
             resp.Text = activity.Text;
+
             await turnContext.SendActivityAsync(resp, cancellationToken);
         }
 
@@ -134,8 +135,33 @@ namespace Microsoft.BotBuilderSamples.Bots
                 channelData.originalActivity.attachments =  attachments;
             }
 
+            if (act.Text.StartsWith("attach" ))
+            {
+                var urls = act.Text.Split(" ");
+                var attachments = new List<Attachment>();
+                foreach (var url in urls.Skip(1))
+                {
+                    byte[] rawBytes;
+                    using (WebClient webClient = new WebClient())
+                    {
+                        rawBytes = webClient.DownloadData(url);
+                    }
+
+                    var dataUri = "data:text/plain;base64," + Convert.ToBase64String(rawBytes);
+
+                    var attachment = new Attachment
+                    {
+                        Name = "hello.png",
+                        ContentType = "image/png",
+                        ContentUrl = dataUri
+                    };
+                    attachments.Add(attachment);
+                }
+                resp.Attachments = attachments;
+            }
+
+
             channelData.originalActivity.text = act.Text;
-            //resp.ChannelData = turnContext.Activity;
             await turnContext.SendActivityAsync(resp, cancellationToken);
         }
     }
