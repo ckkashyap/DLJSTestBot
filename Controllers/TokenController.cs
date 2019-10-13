@@ -13,11 +13,10 @@ using Newtonsoft.Json;
 
 namespace Microsoft.BotBuilderSamples.Controllers
 {
-    [Route("tokens/generate")]
+    [Route("token/directline")]
     [ApiController]
     public class TokenController : ControllerBase
     {
-
         [HttpGet]
         public  async Task<string> GetAsync()
         {
