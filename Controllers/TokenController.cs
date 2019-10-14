@@ -27,34 +27,21 @@ namespace Microsoft.BotBuilderSamples.Controllers
             var response = await client.PostAsync("https://directline.botframework.com/v3/directline/tokens/generate", content);
             return await response.Content.ReadAsStringAsync();
         }
-
     }
-    class JsonContent : HttpContent
+
+    [Route("token/directlinease")]
+    [ApiController]
+    public class TokenController2 : ControllerBase
     {
-
-        private readonly MemoryStream _Stream = new MemoryStream();
-        public JsonContent(object value)
+        [HttpGet]
+        public  async Task<string> GetAsync()
         {
-
-            Headers.ContentType = new MediaTypeHeaderValue("application/json");
-            var jw = new JsonTextWriter(new StreamWriter(_Stream));
-            jw.Formatting = Formatting.Indented;
-            var serializer = new JsonSerializer();
-            serializer.Serialize(jw, value);
-            jw.Flush();
-            _Stream.Position = 0;
-
-        }
-        protected override Task SerializeToStreamAsync(Stream stream, TransportContext context)
-        {
-            return _Stream.CopyToAsync(stream);
-        }
-
-
-        protected override bool TryComputeLength(out long length)
-        {
-            length = _Stream.Length;
-            return true;
+            var secret = System.Environment.GetEnvironmentVariable("DIRECTLINE_SECRET");
+            var client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", secret);
+            var content = new StringContent("{\"User\" : {\"Id\": \"dl_ABCD\"}}", Encoding.UTF8, "application/json");
+            var response = await client.PostAsync("https://myasebot.azurewebsites.net/.bot/v3/directline/tokens/generate", content);
+            return await response.Content.ReadAsStringAsync();
         }
     }
 }
