@@ -33,8 +33,9 @@ namespace Microsoft.BotBuilderSamples.Bots
         {
             IMessageActivity activity = turnContext.Activity;
             var testType = activity?.ChannelData?.testType?.Value as string;
+            var text = activity?.Text;
 
-            if (!string.IsNullOrEmpty(testType) && testType == "streaming")
+            if ((!string.IsNullOrEmpty(testType) && testType == "streaming") || (!string.IsNullOrEmpty(text) && text.StartsWith("attachstreaming", StringComparison.OrdinalIgnoreCase)))
             {
                 await OnStreamingMessageActivityAsync(turnContext, cancellationToken);
             }

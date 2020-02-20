@@ -11,7 +11,6 @@ using Microsoft.Extensions.DependencyInjection;
 
 using Microsoft.BotBuilderSamples.Bots;
 using Microsoft.Bot.Builder.EchoBot;
-using Microsoft.Bot.Builder.StreamingExtensions;
 
 namespace Microsoft.BotBuilderSamples
 {
@@ -53,7 +52,7 @@ namespace Microsoft.BotBuilderSamples
             app.UseDefaultFiles();
             app.UseStaticFiles();
 
-            app.UseBotFrameworkNamedPipe();
+            app.UseNamedPipes();
 
             app.UseMvc();
         }

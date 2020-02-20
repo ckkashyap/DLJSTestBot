@@ -1,12 +1,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.168
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EchoBot", "EchoBot.csproj", "{A65B5191-08F6-47AD-A0E9-59C2AD5B4D38}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.StreamingExtensions", "..\bbdotnet2\libraries\Microsoft.Bot.StreamingExtensions\Microsoft.Bot.StreamingExtensions.csproj", "{048CF133-BA3D-4972-8C89-A9248F5391A9}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Builder.StreamingExtensions", "..\bbdotnet2\libraries\Microsoft.Bot.Builder.StreamingExtensions\Microsoft.Bot.Builder.StreamingExtensions.csproj", "{8CD26A77-079E-43D2-89C1-FEAA5D7926EB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,14 +14,6 @@ Global
 		{A65B5191-08F6-47AD-A0E9-59C2AD5B4D38}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A65B5191-08F6-47AD-A0E9-59C2AD5B4D38}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A65B5191-08F6-47AD-A0E9-59C2AD5B4D38}.Release|Any CPU.Build.0 = Release|Any CPU
-		{048CF133-BA3D-4972-8C89-A9248F5391A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{048CF133-BA3D-4972-8C89-A9248F5391A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{048CF133-BA3D-4972-8C89-A9248F5391A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{048CF133-BA3D-4972-8C89-A9248F5391A9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8CD26A77-079E-43D2-89C1-FEAA5D7926EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8CD26A77-079E-43D2-89C1-FEAA5D7926EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8CD26A77-079E-43D2-89C1-FEAA5D7926EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8CD26A77-079E-43D2-89C1-FEAA5D7926EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
