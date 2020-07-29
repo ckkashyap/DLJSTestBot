@@ -18,7 +18,7 @@ namespace Microsoft.BotBuilderSamples.Controllers
     public class TokenController : ControllerBase
     {
         [HttpGet]
-        public  async Task<string> GetAsync()
+        public async Task<string> GetAsync()
         {
             var secret = System.Environment.GetEnvironmentVariable("DIRECTLINE_SECRET");
             var client = new HttpClient();
@@ -34,13 +34,13 @@ namespace Microsoft.BotBuilderSamples.Controllers
     public class TokenController2 : ControllerBase
     {
         [HttpGet]
-        public  async Task<string> GetAsync()
+        public async Task<string> GetAsync()
         {
             var secret = System.Environment.GetEnvironmentVariable("DIRECTLINE_SECRET");
             var client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", secret);
             var content = new StringContent("{\"User\" : {\"Id\": \"dl_ABCD\"}}", Encoding.UTF8, "application/json");
-            var response = await client.PostAsync("https://myasebot.azurewebsites.net/.bot/v3/directline/tokens/generate", content);
+            var response = await client.PostAsync("https://dljstestbot.azurewebsites.net/.bot/v3/directline/tokens/generate", content);
             return await response.Content.ReadAsStringAsync();
         }
     }

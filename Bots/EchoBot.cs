@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -20,13 +20,7 @@ namespace Microsoft.BotBuilderSamples.Bots
     {
         protected override async Task OnMembersAddedAsync(IList<ChannelAccount> membersAdded, ITurnContext<IConversationUpdateActivity> turnContext, CancellationToken cancellationToken)
         {
-            foreach (var member in membersAdded)
-            {
-                if (member.Id != turnContext.Activity.Recipient.Id)
-                {
-                     await turnContext.SendActivityAsync(MessageFactory.Text($"Welcome"), cancellationToken);
-                }
-            }
+            await SendWelcomeMessageAsync(turnContext, cancellationToken);
         }
 
         protected override async Task OnMessageActivityAsync(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
@@ -42,6 +36,24 @@ namespace Microsoft.BotBuilderSamples.Bots
             else
             {
                 await OnNonStreamingMessageActivityAsync(turnContext, cancellationToken);
+            }
+        }
+
+        private async Task SendWelcomeMessageAsync(ITurnContext turnContext, CancellationToken cancellationToken)
+        {
+            foreach (var member in turnContext.Activity.MembersAdded)
+            {
+                if (member.Id != turnContext.Activity.Recipient.Id)
+                {
+                    if (turnContext.Activity.Locale == "zh-CN")
+                    {
+                        await turnContext.SendActivityAsync(MessageFactory.Text($"欢迎"), cancellationToken);
+                    }
+                    else
+                    {
+                        await turnContext.SendActivityAsync(MessageFactory.Text($"Welcome"), cancellationToken);
+                    }
+                }
             }
         }
 
